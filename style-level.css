@@ -9,7 +9,7 @@ body {
 
 /* Level 1 – The Beginning 🌱 */
 body.level-1 {
-  background: url(./image/begining.jpg)repeat-x;
+  background: url(./image/begining_compressed.jpg)repeat-x;
    background-size: cover;
    color: white;
 }
@@ -25,7 +25,7 @@ body.level-1 {
 
 /* Level 2 – The Dark Forest 🌲 */
 body.level-2 {
-  background: url(./image/dark\ forest.jpg)repeat-x;
+  background: url(./image/dark\ forest_compressed.jpg)repeat-x;
   background-size: cover;
   color: white;
 }
@@ -54,7 +54,7 @@ body.level-4 {
   color: white;
 }
 body.level-5 {
-  background: url(image/level5i.png);
+  background: url(./image/level5i_compressed.jpg);
     background-size: cover;
     background-position: center top;
   color: white;
@@ -89,8 +89,8 @@ body.level-2 button {
 }
 button {
   background-color: transparent;
-  color: rgb(5, 4, 4) (238, 238, 238);
-  border: 2px solid rgba(20, 19, 19, 0.851);
+  color: white;
+  border: 2px solid white;
   padding: 10px 16px;
   font-size: 16px;
   border-radius: 10px;
@@ -110,11 +110,11 @@ body.level-4 button {
   color: #ffffff; 
   border: 2px solid #ffffff; 
   border-radius: 30px;
-  padding: 20px 30px;
+  padding: 15px 25px;
   font-size: 25px;
   margin: 20px;
   cursor: pointer;
-  backdrop-filter: blur(6px); /* optional glass effect */
+  backdrop-filter: blur(6px); 
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -124,13 +124,17 @@ body.level-4 button {
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
 }
 #level5Container {
-  padding-top: 60px; 
+  padding-top: 80px; 
   text-align: center;
 }
 body.level-6 {
-  background: url(./image/level6\ .png) no-repeat center top;
+  background: url(./image/level6\ _compressed.jpg) no-repeat center top;
   background-size: cover;
   background-position: center top; 
   color: white;
+}
+#level6Container {
+  padding-top: 60px; 
+  text-align: center;
 }
 

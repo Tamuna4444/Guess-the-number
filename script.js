@@ -1,18 +1,26 @@
+let level1Score = 0;
+let level2Score = 0;
+let level3Score = 0;
+let level4Score = 0;
+let level5Score = 0;
+let level6Score = 0;
+
+
+
+let soundOn = true;           
+let vibrationOn = true;       
+let hiddenBoxIndex = 0;       
+
+
 let rangeStart = 1;
 let rangeEnd = 50;
 let correct;
 let level5Lives = 3;
-let level5Score = 0;
+
 let level5Time = 30;
 let level5TimerInterval;
 
 document.addEventListener("DOMContentLoaded", () => {
-let soundOn = true;
-let vibrationOn = true;
-
-
-
-
   const settingsBtn = document.getElementById('settingsBtn');
   const toggleSound = document.getElementById('toggleSound');
   const toggleVibration = document.getElementById('toggleVibration');
@@ -73,13 +81,13 @@ const levelSounds = {
 function getLevelData(level) {
   switch (level) {
     case 1:
-      return { max: 20, lives: 5, title: "Level 1: The Beginning 🌱" };
+      return { max: 20, lives: 5, title: "Level 1: The Beginning " };
     case 2:
-      return { max: 30, lives: 5, title: "Level 2: Dark Forest 🌲" };
+      return { max: 30, lives: 5, title: "Level 2: Dark Forest " };
     case 3:
-      return { max: 50, lives: 5, title: "Level 3: Dragon's Den 🔥" };
+      return { max: 50, lives: 5, title: "Level 3: Dragon's Den 🐦‍🔥" };
     case 4:
-      return { max: 70, lives: 5, title: "Level 4: Crystal Gate 🗻" };
+      return { max: 70, lives: 5, title: "Level 4: Crystal Gate " };
     default:
       return { max: 100, lives: 5, title: "Level 5: Follow the Intuition" };
   }
@@ -119,10 +127,10 @@ function updateBackground(level) {
 
     function startTimer() {
       clearInterval(timer);
-      document.getElementById("timer").innerText = `⏱️ Time left: ${timeLeft}s`;
+      document.getElementById("timer").innerText = `⏱ Time left: ${timeLeft}s`;
       timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").innerText = `⏱️ Time left: ${timeLeft}s`;
+        document.getElementById("timer").innerText = `⏱ Time left: ${timeLeft}s`;
         if (timeLeft <= 0) {
           clearInterval(timer);
           lives--;
@@ -133,9 +141,13 @@ function updateBackground(level) {
             message.innerHTML = `👻 Game Over! You lost all lives.<br>✅ The correct number was: ${randomNumber}`;
             message.style.color = "black";
             document.getElementById("gameButton").disabled = true;
+
+            showSummary();
+
+
             return;
           } else {
-            message.innerHTML = "⏰ Time's up! You lost 1 life.";
+            message.innerHTML = "🕐 Time's up! You lost 1 life.";
             message.style.color = "orange";
             startTimer();
           }
@@ -230,10 +242,13 @@ function updateBackground(level) {
   if (soundOn) failSound.play();
 
 
-
+  
           message.innerHTML = `👻 Game Over! You lost all lives.<br> ☑️ The correct number was: ${randomNumber}`;
           message.style.color = "black";
           document.getElementById("gameButton").disabled = true;
+
+
+          showSummary();
           return;
         }
 
@@ -254,6 +269,9 @@ function updateBackground(level) {
 function jumpToLevel(n) {
   level = n;
   localStorage.setItem("completedLevel", n - 1);
+  document.getElementById("gameContainer").style.display = "none";
+  document.getElementById("level5Container").style.display = "none";
+  document.getElementById("level6Container").style.display = "none";
 
   if (level === 5) {
     document.getElementById("startScreen").style.display = "none";
@@ -305,9 +323,11 @@ function jumpToLevel(n) {
     loadProgress();
     startTimer();
     updateLivesDisplay();
-function renderLevel5Stage() {
-  document.getElementById("gameContainer").style.display = "none";
-  document.getElementById("level5Container").style.display = "block";
+    function renderLevel5Stage() {
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("gameContainer").style.display = "none";
+      document.getElementById("level6Container").style.display = "none";
+      document.getElementById("level5Container").style.display = "block";
   document.body.className = `level-5`;
 
   const numberOptions = document.getElementById("numberOptions");
@@ -348,16 +368,19 @@ function renderLevel5Stage() {
 
     level5TimerInterval = setInterval(() => {
       level5Time--;
-      document.getElementById("level5Time").innerText = level5Time;
+      document.getElementById("level5Time").innerText = `🕐 ${level5Time}s`;
+
 
       if (level5Time <= 0) {
         clearInterval(level5TimerInterval);
         level5Lives--;
         document.getElementById("level5Lives").textContent = "❤️".repeat(level5Lives);
-        level5Message.textContent = "⏰ Time’s up! You lost 1 life.";
+        level5Message.textContent = "🕐 Time’s up! You lost 1 life.";
         if (level5Lives <= 0) {
           numberOptions.innerHTML = "";
           level5Message.textContent = "💀 Game Over!";
+          showSummary();
+        
         } else {
           setTimeout(() => {
             renderOptions(rangeStart, rangeEnd);
@@ -386,7 +409,7 @@ function renderLevel5Stage() {
           rangeStart = 101;
           rangeEnd = 200;
         } else {
-          level5Message.textContent = "🏆 You passed Level 5!";
+          level5Message.textContent = " You passed Level 5!"
           setTimeout(() => {
             document.getElementById("level5Container").style.display = "none";
             document.getElementById("victoryModal").style.display = "block";
@@ -405,6 +428,7 @@ function renderLevel5Stage() {
       if (level5Lives <= 0) {
         numberOptions.innerHTML = "";
         level5Message.textContent = `💀 Game Over! The correct number was: ${correct}`;
+        showSummary();
       } else {
         setTimeout(() => {
           renderOptions(rangeStart, rangeEnd);
@@ -415,16 +439,23 @@ function renderLevel5Stage() {
   }
 
   const startBtn = document.getElementById("startBtn");
-  startBtn.style.display = "block";
+
   startBtn.onclick = () => {
-    startBtn.style.display = "none";
+    startBtn.style.display = "none"; 
+    document.getElementById("level5Lives").classList.remove("hidden");
+    document.getElementById("level5Time").classList.remove("hidden");
+    document.getElementById("level5ScoreValue").classList.remove("hidden");
     renderOptions(rangeStart, rangeEnd);
     startLevel5Timer();
   };
 }
-let sequence = [];
-let sequenceLength = 3;
-let sequenceIndex = 0;
+let level6Lives = 3;
+let level6Time = 5; 
+let level6Timer;
+let level6Correct; 
+let level6HiddenBoxIndex; 
+
+
 
 function renderLevel6Stage() {
   document.getElementById("startScreen").style.display = "none";
@@ -434,72 +465,120 @@ function renderLevel6Stage() {
 
   document.body.className = "level-6";
 
+  document.getElementById("level6Message").textContent = "";
+  document.getElementById("level6Boxes").innerHTML = "";
+  document.getElementById("level6Lives").textContent = "";
+  document.getElementById("level6Time").textContent = "";
+
   const startBtn = document.getElementById("level6StartBtn");
   startBtn.style.display = "inline-block";
-
-  document.getElementById("sequenceDisplay").textContent = "";
-  document.getElementById("sequenceButtons").innerHTML = "";
-  document.getElementById("level6Message").textContent = "";
+  startBtn.onclick = startLevel6;
 }
 
-document.getElementById("level6StartBtn").onclick = () => {
+function startLevel6() {
   document.getElementById("level6StartBtn").style.display = "none";
-  sequenceLength = 3;
-  generateSequence();
-  showSequence();
-};
+  level6Lives = 3;
+  document.getElementById("level6Lives").textContent = "❤️❤️❤️";
+  document.getElementById("level6Message").textContent = "";
+  setupLevel6Round();
+}
 
-function generateSequence() {
-  sequence = [];
-  for (let i = 0; i < sequenceLength; i++) {
-    sequence.push(Math.floor(Math.random() * 9) + 1);
+function setupLevel6Round() {
+  const boxesContainer = document.getElementById("level6Boxes");
+  boxesContainer.innerHTML = "";
+
+ 
+  level6Correct = Math.floor(Math.random() * (rangeEnd - rangeStart + 1)) + rangeStart;
+  
+  
+  level6HiddenBoxIndex = Math.floor(Math.random() * 3);
+
+  for (let i = 0; i < 3; i++) {
+    const box = document.createElement("button");
+    box.textContent = "";
+    box.style.fontSize = "40px";
+    box.style.width = "80px";
+    box.style.height = "80px";
+    box.onclick = () => checkLevel6Box(i, box);
+    boxesContainer.appendChild(box);
   }
-  console.log("Generated sequence:", sequence);
+
+  level6Time = 5;
+  startLevel6Timer();
 }
 
-function showSequence() {
-  const display = document.getElementById("sequenceDisplay");
-  display.textContent = sequence.join(" ");
-  setTimeout(() => {
-    display.textContent = "";
-    renderSequenceButtons();
-  }, 2000);
-}
 
-function renderSequenceButtons() {
-  const container = document.getElementById("sequenceButtons");
-  container.innerHTML = "";
 
-  const shuffled = [...sequence].sort(() => 0.5 - Math.random());
+function checkLevel6Box(index, box) {
+  clearInterval(level6Timer);
 
-  shuffled.forEach(num => {
-    const btn = document.createElement("button");
-    btn.textContent = num;
-    btn.style.fontSize = "20px"; 
-    btn.onclick = () => handleSequenceClick(num);
-    container.appendChild(btn);
-  });
+  if (index === level6HiddenBoxIndex) {
+    box.textContent = level6Correct;
+    box.style.color = "black";
 
-  sequenceIndex = 0;
-}
+    level6Score += 10;
+    document.getElementById("level6ScoreValue").textContent = `🏆Score: ${level6Score}`;
+     
 
-function handleSequenceClick(num) {
-  console.log("Clicked:", num, "Expected:", sequence[sequenceIndex]);
-  const message = document.getElementById("level6Message");
-  if (num === sequence[sequenceIndex]) {
-    sequenceIndex++;
-    if (sequenceIndex === sequence.length) {
-      message.textContent = "✅ Correct Sequence!";
-      sequenceLength++;
-      setTimeout(() => {
-        message.textContent = "";
-        generateSequence();
-        showSequence();
-      }, 1500);
-    }
+    document.getElementById("level6Message").textContent = "Correct! Next...";
+    setTimeout(() => {
+      document.getElementById("level6Message").textContent = "";
+      setupLevel6Round();
+    }, 1000);
+
   } else {
-    message.textContent = `❌ Wrong! Correct sequence was: ${sequence.join(" ")}`;
+    box.textContent = "❌";
+    box.style.color = "red";
+
+    level6Lives--;
+    document.getElementById("level6Lives").textContent = "❤️".repeat(level6Lives);
+
+    if (level6Lives <= 0) {
+      document.getElementById("level6Message").textContent = "Game Over!";
+      showSummary();
+    } else {
+      document.getElementById("level6Message").textContent = "Oops! Try again...";
+      setTimeout(() => {
+        document.getElementById("level6Message").textContent = "";
+        setupLevel6Round();
+      }, 1000);
+    }
   }
 }
 
 
+
+function startLevel6() {
+  document.getElementById("level6StartBtn").style.display = "none";
+  
+  
+  level6Lives = 3;
+  level6Score = 0; 
+
+
+  document.getElementById("level6Lives").textContent = "❤️❤️❤️";
+  document.getElementById("level6Message").textContent = "";
+
+  
+  document.getElementById("level6ScoreValue").style.display = "block";
+  document.getElementById("level6ScoreValue").textContent = `🏆Score: ${level6Score}`;
+  
+ 
+  setupLevel6Round();
+}
+
+function showSummary() {
+  const score1to4 = level1Score + level2Score + level3Score + level4Score;
+
+  document.getElementById("level1Score").textContent = `Level 1–4: ${score1to4} pts`;
+  document.getElementById("level5Score").textContent = `Level 5: ${level5Score} pts`;
+  document.getElementById("level6FinalScore").textContent = `Level 6: ${level6Score} pts`;
+  document.getElementById("totalScore").textContent = `🏆 Total: ${score1to4 + level5Score + level6Score} pts`;
+
+  document.getElementById("summaryModal").style.display = "block";
+}
+
+
+function closeSummary() {
+  document.getElementById("summaryModal").style.display = "none";
+}
