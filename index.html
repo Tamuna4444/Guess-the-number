@@ -39,7 +39,7 @@
 </div>
 
 <div id="gameContainer" style="display:none;">
- <h1> Guess the Number!</h1>
+ <h1>🎯 Guess the Number!</h1>
   <h1 id="levelTitle">Level 1: The Beginning 🌱</h1>
   <p id="levelStory">“Guess a number between 1 and 20” </p>
 
@@ -50,34 +50,35 @@
   
 
   <p id="message"></p>
-  <div id="lives">🤎🤎🤎🤎🤎</div>
+  <div id="lives">❤️❤️❤️❤️❤️</div>
   <p id="timer">⏱️ Time left: 50s</p>
   <p id="score">🏆 High Score: 0</p>
   </div>
 
-  <div id="level5Container" style="display: none;">
-    <h2>Level 5: Follow the Intuition</h2>
-    <h3>Choose the number you feel is correct:</h3>
-    <div id="numberOptions"></div>
-   <div id="level5Lives" class="hidden">❤️❤️❤️</div>
-   <div id="level5Time" class="hidden">⏰ 30s</div>
-   <div id="level5ScoreValue" class="hidden">🏆Score: 0</div>
-   <div id="level5Message"></div>
-   <button id="startBtn">Start</button>
-  </div>
+<div id="level5Container" style="display: none; text-align: center;">
+  <h1>Level 5: Follow the Intuition</h1>
+  <p id="level5Prompt"><h3>Choose the number you feel is correct:</h3></p>
+
+  <div id="numberOptions" style="display: flex; justify-content: center; gap: 15px;"></div>
+  <div id="level5Message"></div>
+  <div id="level5Lives">❤️❤️❤️</div>
+ <div id="level5Timer">⏱ Time left: <span id="level5Time">30</span>s</div>
+ <div id="level5Score">Score: <span id="level5ScoreValue">0</span></div>
 
 
-<div id="level6Container" style="display: none; text-align: center;">
-  <h2>Level 6: Hidden Choice</h2>
-  <h3> Find the Hidden Number</h3>
-  <button id="level6StartBtn">Start</button>
-  <div id="level6Boxes" style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;"></div>
-  <p id="level6Message"></p>
-  <div id="level6Lives"></div>
-  <div id="level6Time">⏱️</div>
+
+<button id="startBtn">Start</button>
 </div>
 
+<!-- LEVEL 6 Container -->
+<div id="level6Container" style="display: none; text-align: center;">
+  <h1>Level 6: Mystic Memory 🧠</h1>
+  <div id="sequenceDisplay"></div>
+  <div id="sequenceButtons"></div>
+  <p id="level6Message"></p>
+  <button id="level6StartBtn">Start</button>
 
+</div>
 
 
 

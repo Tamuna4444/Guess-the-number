@@ -320,76 +320,29 @@ input[type="number"] {
   cursor: pointer;
 
 }
-.hidden {
-  display: none;
-}
 
-#level5Lives,
-#level5Time,
-#level5ScoreValue {
-  margin-top: 10px;
-  font-size: 24px; 
-  font-weight: bold;
-}
-#level5Container h2 {
+#level5Score, #level5Timer,#level5Lives {
   font-size: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-#level5Container h3 {
-  font-size: 22px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-#level6Boxes button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;   
-  height: 80px;
-  font-size: 60px;  
-}
-
-.level-6 {
-  background: #222;
-  color: #fff;
-  
-}
-
-#level6Boxes button {
-  border: 2px solid #fff;
-  background:white;
-  color: #fff;
-  cursor: pointer;
-}
-#level6Score, #level6Lives {
-  font-size: 50px;
   margin: 15px auto;
   color: white;
-  
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+#sequenceDisplay {
+  font-size: 40px;
+  color: white;
+  margin-top: 20px;
 }
 
+#level6Message {
+  font-size: 28px;
+  color: white;
+  margin-top: 30px;
+}
 
 #level6StartBtn {
-  display: block;
-  margin: 50px auto;
-  padding: 12px 30px;
-  font-size: 30px;
-  border: none;
-  border-radius: 20px;
-  background-color:white;
-  color: rgb(12, 12, 12);
-  cursor: pointer;
-
-}
-#level6Container h2 {
-  font-size: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-#level6Container h3 {
-  font-size: 22px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-#level6Time {
-  font-size: 32px; 
-  margin-top: 10px; 
+  padding: 15px 30px;
+  font-size: 24px;
+  color:white;
 }
 
